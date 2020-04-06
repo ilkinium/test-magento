@@ -27,29 +27,24 @@ class InstallData implements InstallDataInterface
     private $attributeSetFactory;
 
     /**
-     * @var Config
+     * @param CustomerSetupFactory $customerSetupFactory
+     * @param AttributeSetFactory $attributeSetFactory
      */
-    private $eavConfig;
-
-    /**
-     * @var
-     */
-    private $eavSetupFactory;
-
-    public function __construct(EavSetupFactory $eavSetupFactory, CustomerSetupFactory $customerSetupFactory)
+    public function __construct(CustomerSetupFactory $customerSetupFactory, AttributeSetFactory $attributeSetFactory)
     {
-        $this->eavSetupFactory = $eavSetupFactory;
         $this->customerSetupFactory = $customerSetupFactory;
+        $this->attributeSetFactory = $attributeSetFactory;
     }
 
     /**
      * {@inheritdoc}
-     * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
      */
     public function install(ModuleDataSetupInterface $setup, ModuleContextInterface $context)
     {
+
         /** @var CustomerSetup $customerSetup */
         $customerSetup = $this->customerSetupFactory->create(['setup' => $setup]);
+
         $customerEntity = $customerSetup->getEavConfig()->getEntityType('customer');
         $attributeSetId = $customerEntity->getDefaultAttributeSetId();
 
@@ -66,22 +61,22 @@ class InstallData implements InstallDataInterface
                 'input' => 'text',
                 'required' => false,
                 'visible' => true,
-                'source' => '',
-                'backend' => '',
-                'user_defined' => false,
-                'is_user_defined' => false,
-                'sort_order' => 1000,
+//                'source' => '',
+//                'backend' => '',
+                'user_defined' => true,
+//                'is_user_defined' => false,
+//                'sort_order' => 1000,
                 'is_used_in_grid' => true,
                 'is_visible_in_grid' => true,
                 'is_filterable_in_grid' => true,
                 'is_searchable_in_grid' => true,
                 'position' => 1000,
-                'default' => null,
-                'system' => null,
+//                'default' => 0,
+                'system' => 0,
             ]
         );
 
-        $attribute = $customerSetup->getEavConfig()->getAttribute(Customer::ENTITY, 'your_sample_attribute')
+        $attribute = $customerSetup->getEavConfig()->getAttribute(Customer::ENTITY, 'username')
             ->addData(
                 [
                     'attribute_set_id' => $attributeSetId,
