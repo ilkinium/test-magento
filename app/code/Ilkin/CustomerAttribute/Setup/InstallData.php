@@ -71,7 +71,7 @@ class InstallData implements InstallDataInterface
                 'is_filterable_in_grid' => true,
                 'is_searchable_in_grid' => true,
                 'position' => 1000,
-//                'default' => 0,
+                'default' => 0,
                 'system' => 0,
             ]
         );
